@@ -1,163 +1,104 @@
 import Car from "../models/car.models.js";
-import multer from "multer";
-import uploadImage from '../middlewares/uploadImage.js';
 import fs from 'fs';
-import path from 'path';
+import axios from 'axios';
 
 export const getCars = async (req, res) => {
   try {
-    const cars = await Car.find({ user: req.user.id }).populate("user");
-
-    const carsWithImageURL = cars.map((car) => {
-      const imageURL = car.image
-        ? `${req.protocol}://${req.get("host")}/${car.image}`
-        : null;
-      return { ...car._doc, image: imageURL };
-    });
-
-    res.json(carsWithImageURL);
+    const cars = await Car.find().lean().exec()
+    res.json(cars);
   } catch (error) {
     res.status(500).json({ error: "No se pudieron obtener los autos" });
   }
 };
+export const getCar = async (req, res) => {
+  try {
+    const carId = req.params.id;
+    const car = await Car.findById(carId).lean().exec();
+
+    if (!car) {
+      return res.status(404).json({ error: 'El auto no existe' });
+    }
+
+    res.json(car);
+  } catch (error) {
+    res.status(500).json({ error: 'No se pudo obtener el auto' });
+    console.log(error);
+  }
+};
 
 export const createCar = async (req, res ) => {
-    try {
-        uploadImage(req, res, async (err) => {
-
-            if (err instanceof multer.MulterError) {
-                return res.status(400).json({ error: err.message });
-            } else if (err) {
-                return res.status(500).json({ error: 'No se pudo subir la imagen' });
-            }
-            
-
+    try { 
         const { model, brand, description, price } = req.body;
-        const imagePath = req.file.path;
-        console.log(req.user);
+        
         const newCar = new Car({
             model,
             brand,
             description,
             price,
-            image: imagePath,
             user: req.user.id
         });
+
+        if (req.file) {
+          const { filename } = req.file;
+          newCar.setImgUrl(filename);
+        }
 
         const savedCar = await newCar.save();
         res.status(201).json(savedCar);
 
-    });
-
     } catch (error) {
         res.status(500).json({ error: 'No se pudo crear el auto' });
-    }
-};
-
-export const getCar = async (req, res ) => {
-    try {
-
-        const car = await Car.findById(req.params.id).populate('user');
-    
-        if (!car) {
-            return res.status(404).json({ error: 'No se encontró el auto' });
-        }
-        
-        const carsImage = {
-            ...car._doc,
-            image: car.image
-            ? `${req.protocol}://${req.get('host')}/uploads/${car.image}`
-            : null
-        };
-        
-        res.json(carsImage);
-
-    } catch (error) {
-        res.status(500).json({ error: 'Error al obtener el auto' });
+        console.log(error)
     }
 };
 
 export const updateCar = async (req, res) => {
-    try {
-      uploadImage(req, res, async (err) => {
-        if (err instanceof multer.MulterError) {
-          return res.status(400).json({ error: err.message });
-        } else if (err) {
-          return res.status(500).json({ error: 'No se pudo subir la imagen' });
-        }
-  
-        const { model, brand, description, price } = req.body;
-        const imagePath = req.file ? req.file.path : null;
-  
-        const previousCar = await Car.findById(req.params.id);
-  
-        // Verificar si hay una imagen anterior y si es diferente de la nueva imagen
-        if (previousCar.image && previousCar.image !== imagePath) {
-          const previousImagePath = path.join('', previousCar.image);
-  
-          // Verificar si el archivo existe antes de intentar eliminarlo
-          if (fs.existsSync(previousImagePath)) {
-            fs.unlinkSync(previousImagePath);
-            console.log('Imagen anterior eliminada:', previousImagePath);
-          } else {
-            console.log('La imagen anterior no existe:', previousImagePath);
-          }
-        }
-  
-        const updatedCar = await Car.findByIdAndUpdate(
-          req.params.id,
-          {
-            model,
-            brand,
-            description,
-            price,
-            image: imagePath,
-          },
-          { new: true }
-        );
-  
-        if (!updatedCar) {
-          return res.status(404).json({ error: 'Auto no encontrado' });
-        }
-  
-        const updatedCarWithImage = {
-          ...updatedCar._doc,
-          image: updatedCar.image
-            ? `${req.protocol}://${req.get('host')}/uploads/${updatedCar.image}`
-            : null,
-        };
-  
-        res.json(updatedCarWithImage);
-      });
-    } catch (error) {
-      console.error('Error al actualizar el auto:', error);
-      res.status(500).json({ error: 'Error al actualizar el auto' });
+  try {
+    const carId = req.params.id;
+    const { model, brand, description, price } = req.body;
+
+    const updatedCar = await Car.findByIdAndUpdate(
+      carId,
+      { model, brand, description, price },
+      { new: true }
+    );
+
+    if (!updatedCar) {
+      return res.status(404).json({ error: 'El auto no existe' });
     }
-  };
+
+    // Verifica si se proporcionó una nueva imagen y guarda la URL de la nueva imagen
+    if (req.file) {
+      const { filename } = req.file;
+      updatedCar.setImgUrl(filename);
+      await updatedCar.save();
+    }
+
+    res.json(updatedCar);
+  } catch (error) {
+    res.status(500).json({ error: 'No se pudo actualizar el auto' });
+    console.log(error);
+  }
+};
 
 export const deleteCar = async (req, res) => {
-    try {
-      const car = await Car.findByIdAndDelete(req.params.id);
-  
-      if (!car) {
-        return res.status(404).json({ error: 'No se encontró el auto' });
-      }
-  
-      if (car.image) {
-        const imagePath = path.join('', car.image);
-        
-        // Verificar si el archivo existe antes de intentar eliminarlo
-        if (fs.existsSync(imagePath)) {
-          fs.unlinkSync(imagePath);
-          console.log('Imagen eliminada:', imagePath);
-        } else {
-          console.log('El archivo de imagen no existe:', imagePath);
-        }
-      }
-  
-      res.json({ message: 'Auto eliminado exitosamente' });
-    } catch (error) {
-      console.error('Error al eliminar el auto:', error);
-      res.status(500).json({ error: 'Error al eliminar el auto' });
+  try {
+    const carId = req.params.id;
+    const deletedCar = await Car.findByIdAndDelete(carId);
+
+    if (!deletedCar) {
+      return res.status(404).json({ error: 'El auto no existe' });
     }
-  };
+
+    // Elimina la imagen asociada al auto si existe
+    if (deletedCar.imgUrl) {
+      const imageUrl = deletedCar.imgUrl;
+      await axios.delete(imageUrl); // Envía una solicitud DELETE al servidor para eliminar la imagen
+    }
+
+    res.json({ message: 'Auto eliminado correctamente' });
+  } catch (error) {
+    res.status(500).json({ error: 'No se pudo eliminar el auto' });
+    console.log(error);
+  }
+};  

@@ -1,7 +1,25 @@
 import app from "./app.js";
+import { config } from "./settings.js";
 import { connectDB } from "./db.js";
+import dotenv from "dotenv";
 
-connectDB();
+dotenv.config();
 
-app.listen(4000)
-console.log("Server on port", 4000)
+const initApp = async () => {
+  try {
+    const { appConfig, dbConfig } = config;
+    const { port: appPort } = appConfig;
+    const { host: dbHost, port: dbPort, dbName } = dbConfig;
+
+    await connectDB(dbHost, dbPort, dbName);
+
+    app.listen(appPort, () => {
+      console.log(`Server is running on port ${appPort}`);
+    });
+  } catch (error) {
+    console.error("Error initializing the app:", error);
+    process.exit(1);
+  }
+};
+
+initApp();

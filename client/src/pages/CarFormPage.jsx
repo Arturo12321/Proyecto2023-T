@@ -1,24 +1,50 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import {  useForm } from "react-hook-form";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useCars } from "../context/CarsContext";
+import { useEffect } from "react";
 function CarFormPage() {
   
-  const {register, handleSubmit, formState: { errors } } = useForm();
-  const { createCar } = useCars();
-  
-  const onSubmit = handleSubmit(async(data) => {
-    const { model, brand, description, price, image } = data;
-    const carData = {
-      model,
-      brand,
-      description,
-      price,
-      image: image[0], // Accede al archivo seleccionado correctamente
-    };
-    createCar(carData);
+  const {register, setValue,  handleSubmit, formState: { errors } } = useForm();
+  const { createCar, getCar, updateCar } = useCars();
+  const navigate = useNavigate();
+  const params = useParams();
 
-  });
+  useEffect(() => {
+   async function loadCar() {
+      if(params.id) {
+        const car = await getCar(params.id);
+        console.log(car);
+        setValue('model', car.model);
+        setValue('brand', car.brand);
+        setValue('description', car.description);
+        setValue('price', car.price);
+        setValue('image',car.image);
+
+      }
+    }
+    loadCar()
+  },[])
+  
+    const onSubmit = handleSubmit(async(data) => {
+      const { model, brand, description, price, image } = data;
+        const carData = {
+          model,
+          brand,
+          description,
+          price,
+          image: image[0], 
+        };
+
+      if(params.id) {
+          updateCar(params.id, carData)
+      } else {
+        
+        createCar(carData);
+        
+      }
+      navigate('/cars')
+    });
 
   return (
     <section className="content">
@@ -97,7 +123,7 @@ function CarFormPage() {
 
                       <div className="form-group">
                       <label className="control-label">Image</label>
-                      <input type="file" className="form-control" placeholder="Ingresar image"
+                      <input type="file" className="form-control" placeholder="Ingresar imagen"
                           {...register("image", { required: true })}/>
                           
                       {errors.image && (
