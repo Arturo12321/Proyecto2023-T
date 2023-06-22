@@ -9,17 +9,11 @@ function Navbar() {
     <nav className="navbar navbar-default navbar-fixed-top">
         <div className="container-fluid">
             <div className="navbar-header">
-                <div id="mobile-menu">
-                    <div className="left-nav-toggle">
-                        <a href="#">
-                            <i className="stroke-hamburgermenu"></i>
-                        </a>
-                    </div>
-                </div>
-                <a className="navbar-brand" href="index-2.html">
+                <Link className="navbar-brand" to= {
+                    isAuthenticated ? "/cars" : "/"
+                }>
                     FASTCAR
-                    {/* <span>v.1.0</span> */}
-                </a>
+                </Link>
             </div>
             <div id="navbar" className="navbar-collapse collapse">
                 <div className="left-nav-toggle">
@@ -28,7 +22,7 @@ function Navbar() {
                     </a>
                 </div>
                 <form className="navbar-form navbar-left">
-                    <input type="text" className="form-control" placeholder="Busca el auto que necesites..." style={{width: "1000px"}} />
+                    <input type="text" className="form-control" placeholder="Busca el auto que necesites..." />
                 </form>
                 <ul className="nav navbar-nav navbar-right">
                     { isAuthenticated ? (

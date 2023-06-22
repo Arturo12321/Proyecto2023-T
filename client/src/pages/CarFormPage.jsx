@@ -19,32 +19,28 @@ function CarFormPage() {
         setValue('brand', car.brand);
         setValue('description', car.description);
         setValue('price', car.price);
-        setValue('image',car.image);
-
+        setValue('image', car.image);
       }
     }
     loadCar()
   },[])
   
-    const onSubmit = handleSubmit(async(data) => {
-      const { model, brand, description, price, image } = data;
-        const carData = {
-          model,
-          brand,
-          description,
-          price,
-          image: image[0], 
-        };
-
-      if(params.id) {
-          updateCar(params.id, carData)
-      } else {
-        
-        createCar(carData);
-        
-      }
-      navigate('/cars')
-    });
+  const onSubmit = handleSubmit(async(data) => {
+    const { model, brand, description, price, image } = data;
+      const carData = {
+        model,
+        brand,
+        description,
+        price,
+        image: image[0], 
+      };
+    if(params.id) {
+        updateCar(params.id, carData)
+    } else {
+      createCar(carData);      
+    }
+    navigate('/cars')
+  });
 
   return (
     <section className="content">
@@ -63,73 +59,49 @@ function CarFormPage() {
                 <div className="panel panel-filled">
                   <div className="panel-body">
                     <form onSubmit={onSubmit}>
-                      
-
                       <div className="form-group">
-
                         <label className="control-label">Model</label>
-
                         <input type="text" className="form-control" placeholder="Ingresar model"
                           {...register("model", { required: true })} />
-
                         <span className="help-block small">Your unique model to app</span>
-
                         {errors.model && (
                             <p className="text-red-500">Model is required!</p>            
                         )}
-                        
                       </div>
-
                       <div className="form-group">
-
                         <label className="control-label">Brand</label>
-
                         <input type="text" className="form-control" placeholder="Ingresar brand"
                           {...register("brand", { required: true })} />
-
                         <span className="help-block small">Your unique brand to app</span>
-
                         {errors.brand && (
                             <p className="text-red-500">Brand is required!</p>            
                         )}
-
                       </div>
-
                       <div className="form-group">
                         <label className="control-label">Description</label>
                         <textarea type="text" rows="5" className="form-control" placeholder="Ingresar description" 
                             {...register("description", { required: true })}/>
-
                         <span className="help-block small">Your unique description to app</span>
-
                         {errors.description && (
                             <p className="text-red-500">Description is required!</p>            
                         )}
                       </div>
-
                       <div className="form-group">
-
                         <label className="control-label">Price</label>
                         <input type="number" className="form-control" placeholder="Ingresar price"
                           {...register("price", { required: true })}/>
-
                         <span className="help-block small">Your unique price to app</span>
-
                         {errors.price && (
                             <p className="text-red-500">Price is required!</p>            
                         )}
-
                       </div>
-
                       <div className="form-group">
                       <label className="control-label">Image</label>
                       <input type="file" className="form-control" placeholder="Ingresar imagen"
-                          {...register("image", { required: true })}/>
-                          
+                          {...register("image", { required: true })}/>   
                       {errors.image && (
                             <p className="text-red-500">Image is required!</p>            
                       )}
-                      
                       </div>
                       <div  className="col-sm-12 text-right">
                           <div className="panel-body buttons-margin">
@@ -137,9 +109,7 @@ function CarFormPage() {
                               <Link className="btn btn-w-md btn-warning" to="/cars">Cancelar</Link>
                           </div>
                       </div>    
-                      
                     </form>
-
                   </div>
                 </div>
             </div>
