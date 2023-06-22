@@ -37,8 +37,6 @@ function CarsPage() {
             </div>
         </section>
     );
-  
-
   return (
     <section className="content">
         <div className="container-fluid">
