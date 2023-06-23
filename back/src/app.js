@@ -7,7 +7,8 @@ import { dirname } from 'path';
 import path from 'path';
 import authRoutes from "./routes/auth.routes.js";
 import carRoutes from "./routes/cars.routes.js";
-
+import carSaleRoutes from "./routes/cars.rent.routes.js";
+import carRentRoutes from "./routes/cars.sale.routes.js";
 
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
@@ -25,4 +26,7 @@ const publicFolderPath = path.join(__dirname, '../uploads');
 app.use('/uploads', express.static(publicFolderPath));
 app.use('/api', authRoutes);
 app.use('/api', carRoutes);
+app.use('/api', carSaleRoutes);
+app.use('/api', carRentRoutes);
+
 export default app;

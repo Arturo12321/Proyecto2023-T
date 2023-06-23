@@ -1,12 +1,14 @@
 import { Router } from "express";
 
 import { authRequired } from "../middlewares/validateToken.js";
-import { getCars, getCar, createCar, deleteCar, updateCar } from "../controllers/cars.controller.js";
+import { getCars, getCar, createCar, deleteCar, updateCar, getMyCars } from "../controllers/cars.controller.js";
 import upload from "../libs/storage.js";
 
 const router = Router();
 
 router.get('/cars', authRequired, getCars );
+
+router.get('/my-cars', authRequired, getMyCars );
 
 router.get('/cars/:id', authRequired, getCar);
 

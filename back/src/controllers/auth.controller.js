@@ -4,28 +4,69 @@ import jwt from "jsonwebtoken";
 import { createdAccessToken } from "../libs/jwt.js";
 import { TOKEN_SECRET } from "../config.js";
 export const register = async (req, res) => {
-    const { email, password, username } = req.body
-
+    const { username, firstname, lastname, dni, birth_date, company_name, ruc, email, address, cell_phone, password } = req.body
     try {
-
-        const userFound = await User.findOne({ email });
-        if (userFound) return res.status(400).json(["The email is already in use"]);
-
+        const userFound = await User.findOne({
+            $or: [
+              { email },
+              { dni },
+              { company_name },
+              { ruc },
+              { cell_phone }
+            ]
+          });      
+          if (userFound) {
+            let errors = [];
+            if (userFound.email === email) {
+              errors.push("The email is already in use");
+            }
+            if (userFound.dni === dni) {
+              errors.push("The DNI is already in use");
+            }
+            if (userFound.company_name === company_name) {
+              errors.push("The company name is already in use");
+            }
+            if (userFound.ruc === ruc) {
+              errors.push("The RUC is already in use");
+            }
+            if (userFound.cell_phone === cell_phone) {
+              errors.push("The cell phone number is already in use");
+            }
+            
+            if (errors.length > 0) {
+              return res.status(400).json(errors);
+            }
+          }
         const passwordHash = await bcrypt.hash(password, 10)
         const newUser = new User({
             username,
+            firstname,
+            lastname,
+            dni, 
+            birth_date, 
+            company_name, 
+            ruc,
             email,
+            address, 
+            cell_phone,
             password:passwordHash,
         });
 
         const userSaved = await newUser.save();
         const token = await createdAccessToken({id: userSaved._id});
-
         res.cookie('token', token)
         res.json({
             id: userSaved.id,
             username: userSaved.username,
+            firstname: userSaved.firstname,
+            lastname: userSaved.lastname,
+            dni: userSaved.dni, 
+            birth_date: userSaved.birth_date, 
+            company_name: userSaved.company_name, 
+            ruc: userSaved.ruc,
             email: userSaved.email,
+            address: userSaved.address,
+            cell_phone: userSaved.cell_phone,
             createdAt: userSaved.createdAt,
             updatedAt: userSaved.updatedAt,
         });
@@ -40,12 +81,12 @@ export const login = async (req, res) => {
     try {
 
         const userFound = await User.findOne({ email });
-        if (!userFound) return res.status(404).json({ message: "User not found"});
+        if (!userFound) return res.status(400).json({ message: "User not found"});
 
 
         const isMatch = await bcrypt.compare(password, userFound.password);
         
-        if (!isMatch) return res.status(404).json({ message: "Invalid password"});
+        if (!isMatch) return res.status(400).json({ message: "Invalid password"});
 
         const token = await createdAccessToken({id: userFound._id});
 
@@ -54,7 +95,15 @@ export const login = async (req, res) => {
         res.json({
             id: userFound.id,
             username: userFound.username,
+            firstname: userFound.firstname,
+            lastname: userFound.lastname,
+            dni: userFound.dni, 
+            birth_date: userFound.birth_date, 
+            company_name: userFound.company_name, 
+            ruc: userFound.ruc,
             email: userFound.email,
+            address: userFound.address,
+            cell_phone: userFound.cell_phone,
             createdAt: userFound.createdAt,
             updatedAt: userFound.updatedAt,
         });
@@ -76,10 +125,18 @@ export const profile = async (req, res) => {
 
     if (!userFound) return res.status(400).json({ message: " Username not found"});
     
-    return res.json({
-        id: userFound._id,
+    res.json({
+        id: userFound.id,
         username: userFound.username,
+        firstname: userFound.firstname,
+        lastname: userFound.lastname,
+        dni: userFound.dni, 
+        birth_date: userFound.birth_date, 
+        company_name: userFound.company_name, 
+        ruc: userFound.ruc,
         email: userFound.email,
+        address: userFound.address,
+        cell_phone: userFound.cell_phone,
         createdAt: userFound.createdAt,
         updatedAt: userFound.updatedAt,
     });
