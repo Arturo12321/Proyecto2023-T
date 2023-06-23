@@ -9,6 +9,7 @@ import authRoutes from "./routes/auth.routes.js";
 import carRoutes from "./routes/cars.routes.js";
 import carSaleRoutes from "./routes/cars.rent.routes.js";
 import carRentRoutes from "./routes/cars.sale.routes.js";
+import officeRoutes from "./routes/offices.routes.js";
 
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
@@ -28,5 +29,6 @@ app.use('/api', authRoutes);
 app.use('/api', carRoutes);
 app.use('/api', carSaleRoutes);
 app.use('/api', carRentRoutes);
+app.use('/api', officeRoutes);
 
 export default app;
