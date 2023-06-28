@@ -12,7 +12,7 @@ const car_rent_Schema = new mongoose.Schema({
         required: true
     },
     year: {
-        type: String,
+        type: Date,
         required: true
     },
     image: {
@@ -59,6 +59,10 @@ const car_rent_Schema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true
+    },
+    isFavorite: {
+        type: Boolean,
+        default: false
     }
 }, {
     timestamps: true

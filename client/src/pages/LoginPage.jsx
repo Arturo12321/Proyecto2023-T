@@ -20,7 +20,7 @@ function LoginPage() {
         signin(data);
     });
     useEffect(() => {
-        if (isAuthenticated) navigate("/cars"); 
+        if (isAuthenticated) navigate("/cars-rent"); 
       }, [isAuthenticated]);
     return (
         <section className="content">
@@ -67,11 +67,13 @@ function LoginPage() {
                                 {errors.password && (
                                     <p className="text-red-500">Password is required!</p>            
                                 )}     
-                            </div>                 
-                            <div>
-                                <button className="btn btn-accent" type="submit">Sign In</button>
-                                <Link className="btn btn-default" to="/register" >Register</Link> 
                             </div>
+                            <div  className="col-sm-12 text-center">              
+                                <div className="panel-body buttons-margin"> 
+                                    <button className="btn btn-w-md  btn-primary" type="submit">Sign In</button>&nbsp;&nbsp;
+                                    <Link className="btn btn-w-md  btn-success" to="/register" >Register</Link> 
+                                </div>
+                            </div>   
                         </form>
                     </div>
                 </div>

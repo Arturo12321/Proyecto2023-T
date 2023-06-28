@@ -18,6 +18,7 @@ export const createCarRequest = (car) => {
     },
   });
 };
+
 export const updateCarRequest = (id, car) => {
   const formData = new FormData();
   formData.append("model", car.model);

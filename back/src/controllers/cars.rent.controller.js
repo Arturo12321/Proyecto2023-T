@@ -63,7 +63,7 @@ export const createCar = async (req, res ) => {
     const savedCarRent = await newCarRent.save();
     res.status(200).json(savedCarRent);
   } catch (error) {
-    res.status(500).json({ error: 'No se pudo crear el auto' });
+    res.status(510).json({ error: 'No se pudo crear el auto' });
     console.log(error)
   }
 };
@@ -119,4 +119,73 @@ export const deleteCar = async (req, res) => {
     res.status(500).json({ error: 'No se pudo eliminar el auto' });
     console.log(error);
   }
-};  
+}; 
+
+export const getFavorites = async (req, res) => {
+  try {
+    const carsFavorites = await CarRent.find({user:req.user.id}).lean().exec()
+    res.json(carsFavorites);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "No se pudieron obtener el auto" });
+  }
+
+};
+
+export const addFavorite = async (req, res) => {
+  try {
+    const { id } = req.params;
+    
+    // Buscar el automóvil por su ID
+    const carRent = await CarRent.findById(id);
+    
+    if (!carRent) {
+      return res.status(404).json({ error: 'Automóvil no encontrado' });
+    }
+
+    // Verificar si el automóvil ya está marcado como favorito
+    if (carRent.isFavorite) {
+      return res.status(400).json({ error: 'El automóvil ya está marcado como favorito' });
+    }
+
+    // Marcar el automóvil como favorito
+    carRent.isFavorite = true;
+    
+    // Guardar los cambios en la base de datos
+    await carRent.save();
+
+    res.status(200).json({ message: 'Automóvil marcado como favorito' });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: 'Error al marcar el automóvil como favorito' });
+  }
+};
+
+export const removeFavorite = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // Buscar el automóvil por su ID
+    const carRent = await CarRent.findById(id);
+
+    if (!carRent) {
+      return res.status(404).json({ error: 'Automóvil no encontrado' });
+    }
+
+    // Verificar si el automóvil no está marcado como favorito
+    if (!carRent.isFavorite) {
+      return res.status(400).json({ error: 'El automóvil no está marcado como favorito' });
+    }
+
+    // Desmarcar el automóvil como favorito
+    carRent.isFavorite = false;
+
+    // Guardar los cambios en la base de datos
+    await carRent.save();
+
+    res.status(200).json({ message: 'Automóvil eliminado de favoritos' });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: 'Error al eliminar el automóvil de favoritos' });
+  }
+};

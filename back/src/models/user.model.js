@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema({
         trim: true
     },
     dni: {
-        type: Number,
+        type: String,
         require: true,
         trim: true,
         unique: true
@@ -34,7 +34,7 @@ const userSchema = new mongoose.Schema({
         unique: true
     },
     ruc: {
-        type: Number,
+        type: String,
         require: true,
         trim: true,
         unique: true

@@ -18,12 +18,26 @@ function Navbar() {
             <div id="navbar" className="navbar-collapse collapse">
                 <div className="left-nav-toggle">
                     <a href="#">
-                        <i className="stroke-hamburgermenu"></i>
+                        { isAuthenticated ? (
+                            <>
+                                <i className="stroke-hamburgermenu"></i>
+                            </>
+                        ): (
+                        <>        
+                        </>
+                        )}
                     </a>
                 </div>
-                <form className="navbar-form navbar-left">
-                    <input type="text" className="form-control" placeholder="Busca el auto que necesites..." />
-                </form>
+                { isAuthenticated ? (
+                    <>  
+                        <form className="navbar-form navbar-left">
+                            <input type="text" className="form-control" placeholder="Busca el auto que necesites..." />
+                        </form>
+                    </>
+                    ): (
+                    <>        
+                    </>
+                    )}
                 <ul className="nav navbar-nav navbar-right">
                     { isAuthenticated ? (
                     <>
@@ -67,7 +81,8 @@ function Navbar() {
                             Hola,  {user.username} buen día....!
                         </li>
                         <li>
-                        <Link to='/cars' >Cars</Link>
+                        <Link to='/cars-rent' >Cars Rent</Link>
+                        <Link to='/cars-sale' >Cars Sale</Link>
                         </li>
                     
                         <li>
@@ -76,11 +91,12 @@ function Navbar() {
                             </a>
                             <ul id="cars" className="nav nav-second collapse">
                                 <li>
-                                    <Link to='/cars' >My Car Sales</Link>
+                                    <Link to='/my-cars-rent' >My Car Rental</Link>
                                 </li>
                                 <li>
-                                    <Link to='/cars' >My Car Rental</Link>
+                                    <Link to='/my-cars-sale' >My Car Sales</Link>
                                 </li>
+                                
                             </ul>
                         </li>
                         
