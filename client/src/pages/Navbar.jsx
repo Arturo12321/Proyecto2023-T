@@ -12,7 +12,7 @@ function Navbar() {
                 <Link className="navbar-brand" to= {
                     isAuthenticated ? "/cars" : "/"
                 }>
-                    FASTCAR
+                    RENTCAR
                 </Link>
             </div>
             <div id="navbar" className="navbar-collapse collapse">

@@ -31,6 +31,16 @@
 	box-shadow:1px 5px 15px #a2a2a2;
     background: linear-gradient(-90deg, #11998e, #38ef7d); 
 }
+.card-button-third-pay i{
+    padding: 15px 15px;
+    border-radius: 15%;
+    font-size: 3rem;
+	color:#fff;
+	box-shadow:1px 6px 24px #d2d2d2;
+    margin-top: 1rem;
+    margin-bottom: 1rem;;
+	background: linear-gradient(-90deg, #11998e, #38ef7d); 
+}
 .card-header-third-2{
     text-align: center;
     padding-top: 3px;

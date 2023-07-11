@@ -9,7 +9,7 @@ function HomePage() {
         <div className="wrapper wrapper-content">
                 <div className="middle-box text-center animated fadeInRightBig">
                     <h1 className="empty font-bold">Bienvenido</h1>
-                    <h1 className="empty-fastcar font-bold">FASTCAR</h1>
+                    <h1 className="empty-fastcar font-bold">RENTCAR</h1>
                     <Link to="/login" >
                         <img src={MiImagen} alt="Descripción de la imagen"/>
                     </Link>

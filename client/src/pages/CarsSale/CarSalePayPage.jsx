@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useCarsSale } from "../../context/CarsSaleContext";
-import {  useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import days from "dayjs";
 import utc from "dayjs-plugin-utc";
 days.extend(utc)
@@ -47,53 +47,108 @@ function CarSalePayPage() {
                                     </div>
                                   </div>
                                   <div className="col-md-7">
-                                      <h2 className="font-bold m-b-xs text-center">Hola, parece que te gusto este auto.</h2>
+                                      <h2 className="font-bold m-b-xs text-center">INGRESE SUS DATOS REQUERIDOS PARA LA VENTA, POR FAVOR.</h2>
                                       <hr className="card-divider card" /> 
-                                      <div className="row">
-                                        <div className="col-lg-6">
-                                            <h1 className="product-main-price text-center">{carSale.brand} <small className="">{carSale.model}</small> </h1>
-                                        </div>
-                                        <div className="col-lg-6">
-                                            <h1 className="product-main-price text-center">Precio del auto   $: {carSale.price}.99</h1>
+                                      
+                                      <hr className="card-divider card" /> 
+
+                                      <div className="panel panel-filled">
+                                        <div className="panel-body">
+                                          <form>
+                                            <div className="form-group col-lg-4">
+                                              <label className="control-label">Apellidos</label>
+                                              <input type="text" className="form-control" placeholder="Ingresar sus apellidos"/>
+                                            </div>
+                                            <div className="form-group col-lg-4">
+                                              <label className="control-label">Nombres</label>
+                                              <input type="text" className="form-control" placeholder="Ingresar sus nombres"/>
+                                            </div>
+                                            <div className="form-group col-lg-4">
+                                              <label className="control-label">DNI</label>
+                                              <input type="number" className="form-control" placeholder="Ingresar sus DNI"/>
+                                            </div>
+                                            <div className="form-group col-lg-4">
+                                              <label className="control-label">Correo</label>
+                                              <input type="text" className="form-control" placeholder="Ingresar sus apellidos"/>
+                                            </div>
+                                            <div className="form-group col-lg-4">
+                                              <label className="control-label">Dirección:</label>
+                                              <input type="text" className="form-control" placeholder="Ingresar sus nombres"/>
+                                            </div>
+                                            <div className="form-group col-lg-4">
+                                              <label className="control-label">Telefono:</label>
+                                              <input type="number" className="form-control" placeholder="Ingresar sus DNI"/>
+                                            </div>
+                                            <hr className="card-divider card" />
+                                            <hr className="card-divider card" />
+                                            <div className="form-group col-lg-6">
+                                              <label className="control-label">Fecha de Inicio:</label>
+                                              <input type="date" className="form-control" />
+                                            </div> 
+                                            <div className="form-group col-lg-6">
+                                              <label className="control-label">Fecha de Devolución:</label>
+                                              <input type="date" className="form-control" />
+                                            </div>
+                                          </form>
                                         </div>
                                       </div>
-                                      <hr className="card-divider card" /> 
-                                      <hr className="card-divider card" /> 
-                                      <div className="col-lg-12">
-                                            <h1  className="product-main-price text-center"> CARACTERISTICAS </h1>
-                                        </div>
-                                        <hr className="card-divider card" /> 
-                                      <div className="row">
-                                        <div className="col-lg-3 text-center">
-                                            <h4 className="product-main-price">Fabricación: {days(carSale.year).utc().format('DD/MM/YYYY')}</h4>
-                                        </div>
-                                        <div className="col-lg-3 text-center">
-                                            <h4 className="product-main-price">N° de Placa: {carSale.license_plate_number}</h4>
-                                        </div>
-                                        <div className="col-lg-3 text-center">
-                                            <h4 className="product-main-price">Color del auto: {carSale.color}</h4>
-                                        </div>
-                                        <div className="col-lg-3 text-center">
-                                            <h4 className="product-main-price">N° de asientos: {carSale.seats}</h4>
-                                        </div>
-                                        
+                                    </div>
+                                  </div>
+                                  <div className="row" >
+                                  <div className="col-lg-5 ">
+                                    <div className="col">
+                                      <h1  className="product-main-price text-center"> CARACTERISTICAS </h1>
+                                    </div>
+                                    <hr className="card-divider card" /> 
+                                    <div className="row ">
+                                      <div className="col-lg-6 text-left">
+                                          <h4 className="product-main-price">Fabricación: {days(carSale.year).utc().format('DD/MM/YYYY')}</h4>
                                       </div>
+                                      <div className="col-lg-6 text-left">
+                                          <h4 className="product-main-price">N° de Placa: {carSale.license_plate_number}</h4>
+                                      </div>
+                                      <div className="col-lg-6 text-left">
+                                          <h4 className="product-main-price">Color del auto: {carSale.color}</h4>
+                                      </div>
+                                      <div className="col-lg-6 text-left">
+                                          <h4 className="product-main-price">N° de asientos: {carSale.seats}</h4>
+                                      </div>
+                                    </div>
                                       <div className="row">
-                                        <div className="col-lg-4 text-center">
+                                        <div className="col-lg-6 text-left">
                                           <h4 className="product-main-price">Tipo de Combustible: {carSale.fuel}</h4>
                                         </div>
-                                        <div className="col-lg-4 text-center">
+                                        <div className="col-lg-6   text-left">
                                           <h4 className="product-main-price">Tipo de Transmisión : {carSale.transmission}</h4>
                                         </div>
-                                        <div className="col-lg-4 text-center">
+                                        <div className="col-lg-4 text-left">
                                           <h4 className="product-main-price">Motor: {carSale.engine}</h4>
                                         </div>
                                       </div>
-                                      <div className="row">
 
-                                        <h4 className="col-lg-12 text-justify">Descripcion:  {carSale.description}</h4>
-                                      </div>
-                                    </div>
+                                  </div>
+                                  <div className="col-lg-7">
+                                  <div className="form-group col-lg-12">
+                                            <h2 className="font-bold m-b-xs text-center">METODO DE PAGO</h2>
+                                            <div className="card-button-third-pay text-center">
+                                                <Link to={`/cars-rent-pay/${carSale._id}`}>
+                                                    <i className="fa fa-paypal text-accent"></i>
+                                                </Link>&nbsp;&nbsp;
+                                                <Link to={`/cars-rent-pay/${carSale._id}`}>
+                                                    <i className="fa fa-cc-mastercard text-accent"></i>
+                                                </Link>&nbsp;&nbsp;
+                                                <Link to={`/cars-rent-pay/${carSale._id}`}>
+                                                    <i className="fa fa-cc-visa text-accent"></i>
+                                                </Link>&nbsp;&nbsp;
+                                                <Link to={`/cars-rent-pay/${carSale._id}`}>
+                                                    <i className="fa fa-credit-card text-accent"></i>
+                                                </Link>&nbsp;&nbsp;
+                                                <Link to={`/cars-rent-pay/${carSale._id}`}>
+                                                    <i className="fa fa-cc-amex text-accent"></i>
+                                                </Link>&nbsp;&nbsp;  
+                                            </div>            
+                                          </div>
+                                  </div>
                                   </div>
                                 </div>
                                 <hr className="card-divider card" /> 
