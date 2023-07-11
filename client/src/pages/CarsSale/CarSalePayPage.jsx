@@ -4,7 +4,7 @@ import {  useParams } from "react-router-dom";
 import days from "dayjs";
 import utc from "dayjs-plugin-utc";
 days.extend(utc)
-function CarSalePage() {
+function CarSalePayPage() {
   const { getCarSale } = useCarsSale();
   const { id } = useParams();
   const [carSale, setCarSale] = useState();
@@ -120,4 +120,4 @@ function CarSalePage() {
   )
 }
 
-export default CarSalePage
+export default CarSalePayPage

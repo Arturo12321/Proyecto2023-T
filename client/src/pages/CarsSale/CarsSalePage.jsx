@@ -28,14 +28,11 @@ function CarsSalePage() {
             </div>
             <div className="panel panel-filled">
                 <div className="panel-body">
-                    Hola {user.username}, en esta pagina no hay autos para vender, puedes actualizar la pagina o puedes volver dentro de un momento. 
+                    Hola {user.firstname}, en esta pagina no hay autos para vender, puedes actualizar la pagina o puedes volver dentro de un momento. 
                 </div>
                 <div className="panel-body">
                     Disculpa.. 
                 </div>
-            </div>
-            <div>
-                <Link to="/add-car-sale" className="btn btn-accent">CREAR NUEVO AUTO PARA VENDER</Link>
             </div>
         </div>
     </section>
@@ -54,7 +51,7 @@ function CarsSalePage() {
                                         <div className="row">
                                             <div className="col-lg-12 col-md-12 col-sm-12">
                                                 <div className="card-header card-header-third-2 rounded">
-                                                    <h1 className="card-header-title">Hola {user.username}</h1>
+                                                    <h1 className="card-header-title">Hola {user.firstname}</h1>
                                                 </div>
                                             </div>
                                         </div>
@@ -78,7 +75,9 @@ function CarsSalePage() {
                                                                             {carSale.description}
                                                                         </div>
                                                                         <div className="card-button-third"> 
-                                                                            <i className="fa fa-automobile text-accent"></i>&nbsp;&nbsp;
+                                                                            <Link to={`/cars-sale-pay/${carSale._id}`}>
+                                                                                <i className="fa fa-automobile text-accent"></i>
+                                                                            </Link>&nbsp;&nbsp; 
                                                                             <i className="fa fa fa-heart-o text-accent "></i>&nbsp;&nbsp;
                                                                             <Link to={`/see-cars-sale/${carSale._id}`}>
                                                                              <i className="fa fa-sharp fa-eye text-accent "></i> 

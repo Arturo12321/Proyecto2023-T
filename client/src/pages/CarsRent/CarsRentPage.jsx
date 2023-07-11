@@ -28,7 +28,7 @@ function CarsRentPage() {
             </div>
             <div className="panel panel-filled">
                 <div className="panel-body">
-                    Hola {user.username}, en esta pagina no hay autos para rentar, puedes actualizar la pagina o puedes volver dentro de un momento. 
+                    Hola {user.firstname}, en esta pagina no hay autos para rentar, puedes actualizar la pagina o puedes volver dentro de un momento. 
                 </div>
                 <div className="panel-body">
                     Disculpa.. 
@@ -54,7 +54,7 @@ function CarsRentPage() {
                                         <div className="row ">
                                             <div className="col-lg-12 col-md-12 col-sm-12">
                                                 <div className="card-header card-header-third-2 rounded">
-                                                    <h1 className="card-header-title">Hola {user.username}</h1>
+                                                    <h1 className="card-header-title">Hola {user.firstname}</h1>
                                                 </div>
                                             </div>
                                         </div>
@@ -77,8 +77,10 @@ function CarsRentPage() {
                                                                         <div className="panel-body">
                                                                             {carRent.description}
                                                                         </div>
-                                                                        <div className="card-button-third"> 
-                                                                            <i className="fa fa-automobile text-accent"></i>&nbsp;&nbsp;
+                                                                        <div className="card-button-third">
+                                                                            <Link to={`/cars-rent-pay/${carRent._id}`}>
+                                                                                <i className="fa fa-automobile text-accent"></i>
+                                                                            </Link>&nbsp;&nbsp; 
                                                                             <i className="fa fa fa-heart-o text-accent "></i>&nbsp;&nbsp;
                                                                             <Link to={`/see-cars-rent/${carRent._id}`}>
                                                                              <i className="fa fa-sharp fa-eye text-accent "></i> 

@@ -1,7 +1,6 @@
 import Office from "../models/office.models.js";
 import axios from 'axios';
 
-// Esta funcion hace que puedas obtener los autos de todas los usuarios en general.
 export const getOffices = async (req, res) => {
   try {
     const offices = await Office.find().lean().exec()
@@ -49,7 +48,8 @@ export const createOffice = async (req, res ) => {
           phone, 
           email,  
           latitude, 
-          longitude
+          longitude,
+          user: req.user.id
         });
 
         if (req.file) {

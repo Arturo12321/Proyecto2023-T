@@ -29,7 +29,7 @@ function MyCarsSalePage() {
             </div>
             <div className="panel panel-filled">
                 <div className="panel-body">
-                    Hola {user.username}, en esta pagina no hay autos para vender, puedes actualizar la pagina o puedes volver dentro de un momento. 
+                    Hola {user.firstname}, en esta pagina no hay autos para vender, puedes actualizar la pagina o puedes volver dentro de un momento. 
                 </div>
                 <div className="panel-body">
                     Disculpa.. 
@@ -72,7 +72,7 @@ function MyCarsSalePage() {
                                                         <th>Placa</th>
                                                         <th>Color</th>
                                                         <th>Precio</th>
-                                                        <th>Fecha de Publicavion</th>
+                                                        <th>Fecha de Publicacion</th>
                                                         <th>Acciones</th>
                                                     </tr>
                                                 </thead>

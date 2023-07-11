@@ -5,12 +5,36 @@ export const registerSchema = z.object({
         .string({
             required_error: "Username is required",
     }),
-    email: z
+    company_name: z
         .string({
-            required_error: "Email is required",
-        })
-        .email({
-            message: "Invalid email",
+            required_error: "Company is required",
+        }),
+    firstname: z
+        .string({
+            required_error: "Firstname is required",
+    }),
+    lastname: z
+        .string({
+            required_error: "Lastname is required",
+    }),
+    dni: z
+        .string({
+            required_error: "DNI is required",
+    }),
+    ruc: z
+        .string({
+            required_error: "RUC is required",
+    }),
+    address: z
+    .string({
+        required_error: "Address is required",
+    }),
+    email: z
+    .string({
+        required_error: "Email is required",
+    })
+    .email({
+        message: "Invalid email",
     }),
     password: z
         .string({

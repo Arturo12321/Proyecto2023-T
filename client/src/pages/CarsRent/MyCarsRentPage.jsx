@@ -29,7 +29,7 @@ function MyCarsRentPage() {
             </div>
             <div className="panel panel-filled">
                 <div className="panel-body">
-                    Hola {user.username}, en esta pagina no hay autos, puedes actualizar la pagina o puedes volver dentro de un momento. 
+                    Hola {user.firstname}, en esta pagina no hay autos, puedes actualizar la pagina o puedes volver dentro de un momento. 
                 </div>
                 <div className="panel-body">
                     Disculpa.. 

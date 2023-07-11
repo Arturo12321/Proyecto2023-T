@@ -154,3 +154,27 @@
     width: auto; 
     max-width: 100%;
 }
+
+.card-map{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    
+}
+.label-map{
+    width: max-content;
+    color: tomato;
+    font-size: 13px;
+    border-bottom: 1px solid tomato;
+    margin: 3px 0;
+}
+.h5-map{
+    color: #000 ;
+}
+.card-img-map{
+    height: auto; 
+    width: auto; 
+    
+}
