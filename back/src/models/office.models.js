@@ -20,12 +20,12 @@ const officeSchema  = new mongoose.Schema({
         required: true
     },
     phone: {
-        type: Number,
+        type: String,
         required: true
     },
     email: {
         type: String,
-        required: true
+        required: true,
     },
     
     latitude: {
